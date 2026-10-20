@@ -16,6 +16,8 @@ export const NAV = [
   { label: '首页', href: '/', key: 'home' },
   { label: '归档', href: '/archive/', key: 'archive' },
   { label: '动态', href: '/moments/', key: 'moments' },
+  { label: '友链', href: '/friends/', key: 'friends' },
+  { label: '网址导航', href: '/compass/', key: 'compass' },
   { label: '关于', href: '/about/', key: 'about' }
 ];
 
@@ -76,4 +78,44 @@ export const FRIENDS = [
   { name: '林深', desc: '写代码，也写山野。', url: 'https://example.com', initial: '林' },
   { name: '阿澈', desc: '前端、摄影与咖啡。', url: 'https://example.com', initial: '澈' },
   { name: 'Momo', desc: '一个长期主义的读书人。', url: 'https://example.com', initial: 'M' }
+];
+
+// 网址导航页的数据：分组 + 链接卡片
+export const COMPASS = [
+  {
+    group: '开发工具',
+    items: [
+      { name: 'GitHub', desc: '全球最大的代码托管平台', url: 'https://github.com' },
+      { name: 'MDN Web Docs', desc: 'Web 技术权威文档', url: 'https://developer.mozilla.org/zh-CN/' },
+      { name: 'Can I Use', desc: '浏览器兼容性查询', url: 'https://caniuse.com' },
+      { name: 'Astro Docs', desc: '本站使用的框架文档', url: 'https://docs.astro.build' }
+    ]
+  },
+  {
+    group: '在线工具',
+    items: [
+      { name: 'ITDOG', desc: '在线测速 / Ping / TCPing 工具箱', url: 'https://www.itdog.cn' },
+      { name: 'Squoosh', desc: '在线图片压缩，支持多格式', url: 'https://squoosh.app' },
+      { name: 'PhotoPea', desc: '浏览器里的 Photoshop', url: 'https://www.photopea.com' },
+      { name: 'Regex101', desc: '正则表达式在线调试与讲解', url: 'https://regex101.com' }
+    ]
+  },
+  {
+    group: 'AI 助手',
+    items: [
+      { name: 'ChatGPT', desc: 'OpenAI 对话式 AI', url: 'https://chatgpt.com' },
+      { name: 'Claude', desc: 'Anthropic AI，擅长长文本与代码', url: 'https://claude.ai' },
+      { name: '豆包', desc: '字节跳动 AI 助手', url: 'https://www.doubao.com' },
+      { name: 'DeepSeek', desc: '深度求索，推理与编程', url: 'https://chat.deepseek.com' }
+    ]
+  },
+  {
+    group: '学习资源',
+    items: [
+      { name: 'freeCodeCamp', desc: '免费编程课程与练习', url: 'https://www.freecodecamp.org/chinese/' },
+      { name: '菜鸟教程', desc: '入门友好的中文教程库', url: 'https://www.runoob.com' },
+      { name: 'Bilibili', desc: '视频学习与娱乐', url: 'https://www.bilibili.com' },
+      { name: 'V2EX', desc: '创意工作者社区', url: 'https://www.v2ex.com' }
+    ]
+  }
 ];

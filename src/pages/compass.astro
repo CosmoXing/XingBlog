@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { COMPASS } from '../consts';
+
+const groups = COMPASS.map((group) => ({
+  group: group.group,
+  items: group.items.map((item) => ({ ...item, host: new URL(item.url).hostname }))
+}));
+const total = groups.reduce((sum, g) => sum + g.items.length, 0);
+---
+
+<Layout title="网址导航" description="日常会用到的一些网站与工具，持续补充。" active="compass" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow">Compass</div>
+      <h1>网址导航<span class="count">{total} SITES</span></h1>
+      <p>日常会用到的一些网站与工具，持续补充。</p>
+    </header>
+
+    {
+      groups.map((group) => (
+        <section class="compass-group">
+          <h2 class="compass-group-title">{group.group}</h2>
+          <div class="compass-grid">
+            {group.items.map((item) => (
+              <a class="compass-card" href={item.url} target="_blank" rel="noopener">
+                <div class="compass-name">
+                  {item.name}
+                  <Icon name="arrow" size={13} />
+                </div>
+                <div class="compass-desc">{item.desc}</div>
+                <div class="compass-url">{item.host}</div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </main>
+</Layout>
