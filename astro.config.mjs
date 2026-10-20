@@ -9,7 +9,6 @@ export default defineConfig({
   site: 'https://blog.cosmoxing.com',
   adapter: cloudflare({ imageService: 'compile' }),
   session: { driver: 'memory' },
-  session: { driver: 'memory' },
   vite: {
     server: {
       watch: {
