@@ -1,0 +1,21 @@
+---
+import { BOOKS } from '../consts';
+
+const tones = ['#6EE7F9', '#A5B4FC', '#7DD3FC'];
+---
+
+<div class="books">
+  {
+    BOOKS.map((book, index) => (
+      <a class="book" href={book.href}>
+        <div class="book-cover" style={`border-left-color:${tones[index % tones.length]}`}>{book.title}</div>
+        <div>
+          <h4>{`《${book.title}》`}</h4>
+          <div class="author">{book.author}</div>
+          <p class="note">{book.note}</p>
+        </div>
+        <div class="stars">{'★'.repeat(book.stars)}{'☆'.repeat(5 - book.stars)}</div>
+      </a>
+    ))
+  }
+</div>

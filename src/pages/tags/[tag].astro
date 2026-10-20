@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { formatDate, sortPosts, tagCounts } from '../../utils';
+
+export async function getStaticPaths() {
+  const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+  const tags = tagCounts(posts);
+  return tags.map((tag) => ({
+    params: { tag: tag.name },
+    props: {
+      tag: tag.name,
+      posts: posts.filter((post) => post.data.tags.includes(tag.name))
+    }
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<Layout title={`#${tag}`} description={`标签 ${tag} 下的全部文章。`} active="archive" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow"><a href="/tags/">Tags</a> / {tag}</div>
+      <h1>#{tag}<span class="count">{posts.length} POSTS</span></h1>
+      <p>标签「{tag}」下的全部文章，按发布时间排列。</p>
+    </header>
+
+    <div class="rows">
+      {
+        posts.map((post) => (
+          <a class="row" href={`/posts/${post.id}/`}>
+            <span class="date">{formatDate(post.data.pubDate)}</span>
+            <h4>{post.data.title}</h4>
+            <span class="cat-label">{post.data.category}</span>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

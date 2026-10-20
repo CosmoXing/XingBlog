@@ -1,0 +1,62 @@
+---
+import { MUSIC } from '../consts';
+
+export interface Props {
+  hideOnMobile?: boolean;
+}
+
+const { hideOnMobile = false } = Astro.props;
+const first = MUSIC.tracks[0];
+const hasAudio = MUSIC.tracks.some((track) => track.src);
+---
+
+<div class:list={['music', { 'music-reading': hideOnMobile }]}>
+  <div class="disc-wrap">
+    <div class="panel" id="musicPanel">
+      <div class="panel-head">
+        Now playing
+        <button id="panelClose" type="button" aria-label="收起">×</button>
+      </div>
+      <div class="track">
+        <div class="track-cover"></div>
+        <div>
+          <div class="track-name" id="trackName">{first.title}</div>
+          <div class="track-artist" id="trackArtist">{first.artist}</div>
+        </div>
+      </div>
+      <div class="bar"><i id="trackBar"></i></div>
+      <div class="times"><span id="trackTime">00:00</span><span id="trackTotal">{first.duration}</span></div>
+      <div class="controls">
+        <button class="ctrl" type="button" aria-label="上一首">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5l-10 7 10 7z"/></svg>
+        </button>
+        <button class="ctrl play" id="playBtn" type="button" aria-label="播放">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>
+        </button>
+        <button class="ctrl" type="button" aria-label="下一首">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5l10 7-10 7z"/></svg>
+        </button>
+      </div>
+      <div class="playlist" id="playlist">
+        {
+          MUSIC.tracks.map((track, index) => (
+            <button
+              class:list={['pl-row', { active: index === 0 }]}
+              type="button"
+              data-title={track.title}
+              data-artist={track.artist}
+              data-src={track.src}
+              data-duration={track.duration}
+            >
+              <span>{String(index + 1).padStart(2, '0')} · {track.title}</span>
+              <span>{track.duration}</span>
+            </button>
+          ))
+        }
+      </div>
+      {!hasAudio && <p class="music-note">把音频放进 public/music/，在 consts.ts 里填好 src 即可播放。</p>}
+    </div>
+    <button class="disc" id="disc" type="button" aria-label="音乐播放器"><span class="core"></span></button>
+  </div>
+  <audio id="musicAudio" preload="none"></audio>
+</div>

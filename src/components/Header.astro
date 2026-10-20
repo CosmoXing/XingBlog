@@ -1,0 +1,75 @@
+---
+import Icon from './Icon.astro';
+import { NAV, SITE } from '../consts';
+
+export interface Props {
+  active?: string;
+}
+
+const { active = '' } = Astro.props;
+
+const iconMap: Record<string, string> = {
+  articles: 'article',
+  archive: 'archive',
+  moments: 'activity',
+  about: 'user'
+};
+---
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="logo" href="/"><span class="logo-mark"></span>{SITE.title}</a>
+
+    <nav class="nav-links" aria-label="主导航">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            class:list={[{ active: active === item.key }]}
+            aria-current={active === item.key ? 'page' : undefined}
+          >
+            <Icon name={iconMap[item.key] ?? 'article'} size={13} />
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="nav-right">
+      <button class="search-btn" id="searchOpen" type="button" aria-label="搜索">
+        <Icon name="search" size={13} />
+        <span class="search-label">搜索</span> <kbd>⌘K</kbd>
+      </button>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题">
+        <span class="icon-moon"><Icon name="moon" size={14} /></span>
+        <span class="icon-sun"><Icon name="sun" size={15} /></span>
+      </button>
+      <button
+        class="icon-btn menu-btn"
+        id="menuBtn"
+        type="button"
+        aria-label="打开菜单"
+        aria-expanded="false"
+      >
+        <Icon name="menu" size={16} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  {
+    NAV.map((item) => (
+      <a href={item.href} class:list={[{ active: active === item.key }]}>
+        <Icon name={iconMap[item.key] ?? 'article'} size={15} />
+        {item.label}
+      </a>
+    ))
+  }
+  <div class="mm-sep"></div>
+  <a href="/categories/"><Icon name="archive" size={15} />分类</a>
+  <a href="/tags/"><Icon name="tag" size={15} />标签</a>
+  <button type="button" data-search-open>
+    <Icon name="search" size={15} />搜索
+  </button>
+</div>

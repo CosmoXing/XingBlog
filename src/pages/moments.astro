@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import MomentList from '../components/MomentList.astro';
+
+const moments = (await getCollection('moments')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout title="动态" description="一些没有长到可以写成文章的想法。" active="moments" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow">Moments</div>
+      <h1>动态<span class="count">{moments.length} NOTES</span></h1>
+      <p>一些没有长到可以写成文章的想法，随手记在这里。</p>
+    </header>
+
+    <div class="moments-page">
+      <MomentList moments={moments} limit={100} />
+    </div>
+  </main>
+</Layout>

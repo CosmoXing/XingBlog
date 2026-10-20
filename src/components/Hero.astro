@@ -1,0 +1,63 @@
+---
+import Icon from './Icon.astro';
+import { SITE } from '../consts';
+
+export interface Props {
+  postCount: number;
+  words: number;
+  latest: string;
+}
+
+const { postCount, words, latest } = Astro.props;
+const head = SITE.title.slice(0, -4);
+const tail = SITE.title.slice(-4);
+const year = new Date().getFullYear();
+---
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">Observation log · {year}</div>
+      <h1>{head}<em>{tail}</em></h1>
+      <p class="tagline">不因虚度年华而悔恨，<br />不因碌碌无为而羞愧。</p>
+      <p class="hero-desc">{SITE.description}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#latest">
+          开始阅读
+          <Icon name="arrow" size={14} />
+        </a>
+        <a class="btn btn-ghost" href="/about/">关于我</a>
+      </div>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <g fill="none" stroke="var(--border)">
+          <circle cx="200" cy="200" r="168" stroke-dasharray="2 9" opacity=".8"></circle>
+          <circle cx="200" cy="200" r="126"></circle>
+          <circle cx="200" cy="200" r="84" stroke-dasharray="1 7"></circle>
+        </g>
+        <g class="orbit-spin">
+          <circle cx="200" cy="200" r="168" fill="none" stroke="var(--accent-line)" stroke-dasharray="110 400" stroke-linecap="round"></circle>
+          <circle cx="368" cy="200" r="3.5" fill="var(--accent)"></circle>
+        </g>
+        <g stroke="var(--border-2)" opacity=".4">
+          <line x1="200" y1="156" x2="200" y2="244"></line>
+          <line x1="156" y1="200" x2="244" y2="200"></line>
+        </g>
+        <circle cx="200" cy="200" r="26" fill="var(--accent-soft)" stroke="var(--accent-line)"></circle>
+        <circle cx="200" cy="200" r="6" fill="var(--accent)"></circle>
+        <g style="font-family:var(--mono)" font-size="8.5" fill="var(--text-3)" letter-spacing="1.6">
+          <text x="200" y="24" text-anchor="middle">RA 05h 35m 17s</text>
+          <text x="200" y="388" text-anchor="middle">DEC −05° 23′ 28″</text>
+          <text x="18" y="204">OBS / 001</text>
+          <text x="318" y="204">2026.10</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <span>最近更新 · {latest}</span>
+    <span>{postCount} 篇文章 / {words.toLocaleString('zh-CN')} 字</span>
+    <span class="scroll">Scroll to explore ↓</span>
+  </div>
+</section>

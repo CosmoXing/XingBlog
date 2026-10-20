@@ -1,0 +1,44 @@
+---
+import { GISCUS } from '../consts';
+
+const enabled = Boolean(GISCUS.repo && GISCUS.repoId);
+---
+
+<section class="comments">
+  <div class="comments-head">
+    <h3>评论</h3>
+    <span>{enabled ? 'GISCUS' : '待配置'}</span>
+  </div>
+
+  {
+    enabled ? (
+      <>
+        <div class="giscus"></div>
+        <script
+          is:inline
+          src="https://giscus.app/client.js"
+          data-repo={GISCUS.repo}
+          data-repo-id={GISCUS.repoId}
+          data-category={GISCUS.category}
+          data-category-id={GISCUS.categoryId}
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="dark"
+          data-lang="zh-CN"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async
+        />
+      </>
+    ) : (
+      <div class="comment-config">
+        <b>评论区已经预留好了</b>
+        在 <code>src/consts.ts</code> 里填入 Giscus 的 <code>repo</code> 与 <code>repoId</code>，刷新后就会显示。
+        仓库需要是公开的，并在 GitHub 上开启 Discussions。
+      </div>
+    )
+  }
+</section>

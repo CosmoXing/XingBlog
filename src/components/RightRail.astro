@@ -1,0 +1,51 @@
+---
+import { NOW, SITE, SITE_INFO } from '../consts';
+
+export interface Props {
+  postCount: number;
+  tagCount: number;
+  words: number;
+  days: number;
+}
+
+const { postCount, tagCount, words, days } = Astro.props;
+---
+
+<aside class="rail rail-right">
+  <div class="card rail-card">
+    <h4 class="rail-title">此刻 <span>Now</span></h4>
+    {
+      NOW.map((row) => (
+        <div class="now-row">
+          <span class="k">{row.key}</span>
+          <span class="v">{row.value}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="card rail-card">
+    <h4 class="rail-title">统计 <span>Stats</span></h4>
+    <div class="stats">
+      <div class="stat"><div class="n">{postCount}</div><div class="l">文章</div></div>
+      <div class="stat"><div class="n">{tagCount}</div><div class="l">标签</div></div>
+      <div class="stat"><div class="n">{Math.round(words / 1000)}k</div><div class="l">总字数</div></div>
+      <div class="stat"><div class="n">{days}</div><div class="l">运行天数</div></div>
+    </div>
+  </div>
+
+  <div class="card rail-card">
+    <h4 class="rail-title">站点 <span>Site</span></h4>
+    {
+      SITE_INFO.map((row) => (
+        <div class="info-row"><span>{row.key}</span><span>{row.value}</span></div>
+      ))
+    }
+  </div>
+
+  <div class="card rail-card subscribe">
+    <h4 class="rail-title">订阅 <span>RSS</span></h4>
+    <p>新文章发布时，通过 RSS 第一时间读到。</p>
+    <a class="btn btn-ghost" href="/rss.xml">订阅更新</a>
+  </div>
+</aside>

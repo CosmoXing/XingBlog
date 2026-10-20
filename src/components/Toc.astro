@@ -1,0 +1,23 @@
+---
+export interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+{
+  items.length > 0 && (
+    <aside class="toc">
+      <h5>目录 / Contents</h5>
+      <ol>
+        {items.map((item) => (
+          <li>
+            <a href={`#${item.slug}`} class:list={[{ sub: item.depth === 3 }]}>{item.text}</a>
+          </li>
+        ))}
+      </ol>
+    </aside>
+  )
+}

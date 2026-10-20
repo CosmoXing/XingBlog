@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import PostCard from '../components/PostCard.astro';
+import BookList from '../components/BookList.astro';
+import MomentList from '../components/MomentList.astro';
+import LeftRail from '../components/LeftRail.astro';
+import RightRail from '../components/RightRail.astro';
+import { SITE } from '../consts';
+import {
+  categoryCounts,
+  coverStyle,
+  daysSince,
+  formatDate,
+  readingMinutes,
+  sortPosts,
+  tagCounts,
+  totalWords
+} from '../utils';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = sortPosts(allPosts);
+const featured = posts.find((post) => post.data.pinned) ?? posts[0];
+const latest = posts.filter((post) => post.id !== featured.id).slice(0, 4);
+const tech = posts.filter((post) => post.data.category === '技术' && post.id !== featured.id).slice(0, 3);
+const life = posts.filter((post) => post.data.category === '生活').slice(0, 2);
+const moments = (await getCollection('moments')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const counts = categoryCounts(posts);
+const countOf = (name: string) => counts.find((item) => item.name === name)?.count ?? 0;
+const words = totalWords(posts);
+const tags = tagCounts(posts);
+const days = daysSince(SITE.startDate);
+const latestDate = formatDate(posts[0].data.pubDate);
+---
+
+<Layout title="" active="articles">
+  <Hero postCount={posts.length} words={words} latest={latestDate} />
+
+  <div class="shell">
+    <LeftRail posts={posts} />
+
+    <div class="main-col">
+      <section class="sec" data-reveal>
+        <SectionHead index="01" title="置顶" en="Featured" href="/archive/" more="全部文章 →" />
+        <a class="feature" href={`/posts/${featured.id}/`}>
+          <div class="feature-body">
+            <span class="badge">Pinned · {featured.data.category}</span>
+            <h3>{featured.data.title}</h3>
+            <p>{featured.data.description}</p>
+            <div class="meta">
+              <span>{formatDate(featured.data.pubDate)}</span>
+              <span>{readingMinutes(featured)} 分钟</span>
+              <span>{featured.body?.replace(/\s/g, '').length ?? 0} 字</span>
+            </div>
+          </div>
+          <div class="cover" style={coverStyle(0)}>
+            <span class="cover-tag">FIG. 01 / BUILD</span>
+            <span class="cover-orb"></span>
+            <span class="star-dot" style="left:26%;top:62%"></span>
+            <span class="star-dot" style="left:71%;top:31%;width:2px;height:2px"></span>
+            <span class="star-dot" style="left:56%;top:78%;width:2px;height:2px"></span>
+          </div>
+        </a>
+      </section>
+
+      <section class="sec" id="latest" data-reveal>
+        <SectionHead index="02" title="最新文章" en="Latest" href="/archive/" more="查看归档 →" />
+        <div class="rows">
+          {
+            latest.map((post) => (
+              <a class="row" href={`/posts/${post.id}/`}>
+                <span class="date">{formatDate(post.data.pubDate)}</span>
+                <h4>{post.data.title}</h4>
+                <span class="cat-label">{post.data.category}</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="sec" data-reveal>
+        <SectionHead index="03" title="技术" en="Tech" href="/categories/技术/" more={`${countOf('技术')} 篇 →`} />
+        <div class="grid-cards">
+          {tech.map((post, index) => <PostCard post={post} index={index + 1} />)}
+        </div>
+      </section>
+
+      <section class="sec" data-reveal>
+        <SectionHead index="04" title="生活" en="Life" href="/categories/生活/" more={`${countOf('生活')} 篇 →`} />
+        <div class="grid-2">
+          {
+            life.map((post, index) => (
+              <a class="life" href={`/posts/${post.id}/`}>
+                <div class="cover" style={coverStyle(index + 4)}>
+                  <span class="cover-tag">FIELD NOTE {String(index + 1).padStart(2, '0')}</span>
+                  <span class="star-dot" style={index === 0 ? 'left:22%;top:28%' : 'left:63%;top:44%'}></span>
+                </div>
+                <div class="life-body">
+                  <div class="meta">
+                    <span>{formatDate(post.data.pubDate)}</span>
+                    <span>{post.data.tags[0] ?? '日常'}</span>
+                  </div>
+                  <h4>{post.data.title}</h4>
+                  <p>{post.data.description}</p>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="sec" data-reveal>
+        <SectionHead index="05" title="读书" en="Reading" href="/categories/读书/" more={`${countOf('读书')} 篇 →`} />
+        <BookList />
+      </section>
+
+      <section class="sec" data-reveal>
+        <SectionHead index="06" title="动态" en="Moments" href="/moments/" more="全部动态 →" />
+        <MomentList moments={moments} limit={3} />
+      </section>
+    </div>
+
+    <RightRail
+      postCount={posts.length}
+      tagCount={tags.length}
+      words={words}
+      days={days}
+    />
+  </div>
+</Layout>

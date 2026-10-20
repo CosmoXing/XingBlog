@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import { SITE } from '../consts';
+import type { Post } from '../utils';
+import { categoryCounts, categoryHref, tagCounts, tagHref } from '../utils';
+
+export interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+const categories = categoryCounts(posts);
+const tags = tagCounts(posts).slice(0, 10);
+---
+
+<aside class="rail rail-left">
+  <div class="card profile">
+    <div class="avatar"><img src="/avatar.jpg" alt="CosmoXing 头像" /></div>
+    <h3>{SITE.author}</h3>
+    <div class="role">Writer / Observer</div>
+    <p>在写字，也在看星星。<br />记录技术、生活与读过的书。</p>
+    <div class="socials">
+      <a href={SITE.github} target="_blank" rel="noopener" aria-label="GitHub"><Icon name="github" size={14} /></a>
+      <a href={`mailto:${SITE.email}`} aria-label="邮箱"><Icon name="mail" size={14} /></a>
+      <a href="/rss.xml" aria-label="RSS"><Icon name="rss" size={14} /></a>
+    </div>
+  </div>
+
+  <div class="card rail-card">
+    <h4 class="rail-title">分类 <a href="/categories/">全部</a></h4>
+    {
+      categories.map((cat) => (
+        <a class="cat" href={categoryHref(cat.name)}>
+          {cat.name} <span>{String(cat.count).padStart(2, '0')}</span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="card rail-card">
+    <h4 class="rail-title">标签 <a href="/tags/">索引</a></h4>
+    <div class="tags">
+      {
+        tags.map((tag) => (
+          <a class="tag" href={tagHref(tag.name)}>{tag.name}</a>
+        ))
+      }
+    </div>
+  </div>
+</aside>

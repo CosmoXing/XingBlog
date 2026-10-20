@@ -1,0 +1,20 @@
+---
+export interface Props {
+  index: string;
+  title: string;
+  en: string;
+  href?: string;
+  more?: string;
+}
+
+const { index, title, en, href, more = '查看全部 →' } = Astro.props;
+---
+
+<div class="sec-head">
+  <div class="sec-title">
+    <span class="idx">{index}</span>
+    <h2>{title}</h2>
+    <span class="en">{en}</span>
+  </div>
+  {href && <a class="more" href={href}>{more}</a>}
+</div>

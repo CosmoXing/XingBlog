@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Toc from '../../components/Toc.astro';
+import Comments from '../../components/Comments.astro';
+import { coverStyle, formatDate, readingMinutes, sortPosts, tagHref } from '../../utils';
+
+export async function getStaticPaths() {
+  const all = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = sortPosts(all);
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      index,
+      prev: posts[index - 1] ?? null,
+      next: posts[index + 1] ?? null
+    }
+  }));
+}
+
+const { post, index, prev, next } = Astro.props;
+const { Content, headings } = await render(post);
+const words = (post.body ?? '').replace(/\s/g, '').length;
+const minutes = readingMinutes(post);
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  active="articles"
+  hideMusicMobile
+>
+  <div class="progress" id="progress"></div>
+
+  <div class="post-wrap">
+    <article>
+      <header class="post-head">
+        <div class="crumbs">
+          <a href="/">文章</a><span>/</span>
+          <a href={`/categories/${encodeURIComponent(post.data.category)}/`}>{post.data.category}</a><span>/</span>
+          <span>{post.data.tags[0] ?? '笔记'}</span>
+        </div>
+        <h1>{post.data.title}</h1>
+        <p class="sub">{post.data.description}</p>
+        <div class="post-meta">
+          <span>{formatDate(post.data.pubDate)}</span>
+          <span>{minutes} 分钟</span>
+          <span>{words} 字</span>
+          <div class="post-tags">
+            {post.data.tags.map((tag) => <a class="tag" href={tagHref(tag)}>{tag}</a>)}
+          </div>
+        </div>
+      </header>
+
+      <div class="post-cover cover" style={coverStyle(index)}>
+        <span class="cover-tag">FIG. {String(index + 1).padStart(2, '0')} / {post.data.category}</span>
+        <span class="cover-orb"></span>
+        <span class="star-dot" style="left:24%;top:58%"></span>
+        <span class="star-dot" style="left:61%;top:34%;width:2px;height:2px"></span>
+        <span class="star-dot" style="left:79%;top:70%;width:2px;height:2px"></span>
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <div class="post-foot">
+        <div class="post-tags" style="margin:0">
+          {post.data.tags.map((tag) => <a class="tag" href={tagHref(tag)}>{tag}</a>)}
+        </div>
+        <div class="share">
+          <button class="btn btn-ghost" type="button" data-copy-link style="height:32px;padding:0 14px;font-size:12px">复制链接</button>
+          <button class="btn btn-ghost" type="button" data-share style="height:32px;padding:0 14px;font-size:12px">分享</button>
+        </div>
+      </div>
+
+      <div class="post-nav">
+        {
+          prev ? (
+            <a class="pn" href={`/posts/${prev.id}/`}>
+              <div class="k">← 上一篇</div>
+              <div class="t">{prev.data.title}</div>
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+        {
+          next ? (
+            <a class="pn" href={`/posts/${next.id}/`} style="text-align:right">
+              <div class="k">下一篇 →</div>
+              <div class="t">{next.data.title}</div>
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+      </div>
+
+      <Comments />
+    </article>
+
+    <Toc headings={headings} />
+  </div>
+</Layout>

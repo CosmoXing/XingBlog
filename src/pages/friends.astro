@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { FRIENDS } from '../consts';
+---
+
+<Layout title="友链" description="一些值得一读的个人站点。" active="about" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow">Friends</div>
+      <h1>友链<span class="count">{FRIENDS.length} LINKS</span></h1>
+      <p>一些值得一读的个人站点。想交换友链，发邮件告诉我。</p>
+    </header>
+
+    <div class="friend-grid">
+      {
+        FRIENDS.map((friend) => (
+          <a class="friend-card" href={friend.url} target="_blank" rel="noopener">
+            <div class="friend-avatar">{friend.initial}</div>
+            <div>
+              <div class="name">{friend.name}</div>
+              <div class="desc">{friend.desc}</div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

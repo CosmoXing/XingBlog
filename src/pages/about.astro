@@ -1,0 +1,186 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../consts';
+import { daysSince, totalWords } from '../utils';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const words = totalWords(posts);
+const days = daysSince(SITE.startDate);
+
+const STACK = [
+  {
+    icon: 'code',
+    name: '核心框架',
+    items: [
+      { name: 'Astro 5', desc: '静态站点框架', href: 'https://astro.build' },
+      { name: 'TypeScript', desc: '类型安全的脚本', href: 'https://www.typescriptlang.org/' },
+      { name: '原生 CSS', desc: '变量与组件类', href: 'https://developer.mozilla.org/docs/Web/CSS' }
+    ]
+  },
+  {
+    icon: 'layers',
+    name: '内容与交互',
+    items: [
+      { name: 'Content Collections', desc: 'Markdown 内容管理', href: 'https://docs.astro.build/en/guides/content-collections/' },
+      { name: 'Shiki', desc: '构建时代码高亮', href: 'https://shiki.style/' },
+      { name: 'JSON 搜索', desc: '零后端站内检索', href: '/search.json' }
+    ]
+  },
+  {
+    icon: 'rss',
+    name: '部署与分发',
+    items: [
+      { name: 'Cloudflare Pages', desc: '静态托管', href: 'https://pages.cloudflare.com/' },
+      { name: '@astrojs/rss', desc: 'RSS 订阅', href: 'https://docs.astro.build/en/guides/rss/' },
+      { name: '@astrojs/sitemap', desc: '站点地图', href: 'https://docs.astro.build/en/guides/integrations-guide/sitemap/' }
+    ]
+  }
+];
+
+const TIMELINE = [
+  { date: '2026.02', title: '观测站启用', desc: '第一版只是一个白底列表，先保证能写。' },
+  { date: '2026.05', title: '第一次改版', desc: '换成三栏骨架和深色背景，开始认真对待排版。' },
+  { date: '2026.09', title: '深空主题', desc: '星野 Canvas、玻璃卡片、单一青色强调，视觉方向定下来。' },
+  { date: '2026.10', title: '现在的样子', desc: '重新校准字号与栏宽，补上动态、音乐、搜索和评论位。' }
+];
+
+const CREDITS = [
+  { name: 'Astro', desc: '静态站点框架', href: 'https://astro.build' },
+  { name: 'Firefly', desc: '三栏版式的参考', href: 'https://github.com/CuteLeaf/Firefly' },
+  { name: 'Shiki', desc: '代码高亮', href: 'https://shiki.style/' }
+];
+---
+
+<Layout title="关于" description="关于 CosmoXing 和这个博客。" active="about" hideMusicMobile>
+  <main class="page-main about-page">
+    <header class="page-head about-page-head">
+      <div class="eyebrow">About / 001</div>
+      <h1>关于这个观测站</h1>
+      <p>一个人、一台电脑、一片不太吵的星空。</p>
+    </header>
+
+    <div class="about-card">
+      <section class="about-hero">
+        <div class="avatar about-avatar"><img src="/avatar.jpg" alt="CosmoXing 头像" /></div>
+        <div class="about-identity">
+          <h2>{SITE.author}</h2>
+          <div class="about-role">Writer / Observer · 2026</div>
+          <p>在写字，也在看星星。白天解决问题，晚上记录想法。</p>
+          <div class="socials">
+            <a href={SITE.github} target="_blank" rel="noopener" aria-label="GitHub"><Icon name="github" size={14} /></a>
+            <a href={`mailto:${SITE.email}`} aria-label="邮箱"><Icon name="mail" size={14} /></a>
+            <a href="/rss.xml" aria-label="RSS"><Icon name="rss" size={14} /></a>
+          </div>
+        </div>
+        <div class="about-meta">
+          <div><b>{posts.length}</b><span>文章</span></div>
+          <div><b>{Math.round(words / 1000)}k</b><span>字数</span></div>
+          <div><b>{days}</b><span>运行天数</span></div>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <div class="about-sec-head"><span class="num">01</span><h3>关于本站</h3></div>
+        <div class="about-prose">
+          <p>这个博客没有明确的垂直领域。技术、生活、读书、随笔，都是观察世界的方式。白天在屏幕前解决问题，晚上偶尔把没想清楚的东西写下来。</p>
+          <p>它最初只是一个白底列表，能写就行。后来慢慢有了三栏、星野背景、玻璃卡片，也有了自己的节奏——不追热点，不堆特效，尽量让每一处都遵守同一套规则。</p>
+          <blockquote>写作不是为了被看见，而是为了把想法放到一个可以回看的地方。</blockquote>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <div class="about-sec-head"><span class="num">02</span><h3>这个站点的技术栈</h3></div>
+        <p class="about-lead">能静态就不上服务，能少一个依赖就少一个。下面是它现在的全部家当。</p>
+        <div class="stack">
+          {
+            STACK.map((group, index) => (
+              <details class="stack-group" open={index === 0}>
+                <summary>
+                  <span class="stack-icon"><Icon name={group.icon} size={14} /></span>
+                  <span class="stack-name">{group.name}</span>
+                  <span class="stack-count">{String(group.items.length).padStart(2, '0')}</span>
+                  <span class="stack-chev">+</span>
+                </summary>
+                <div class="stack-grid">
+                  {group.items.map((item) => (
+                    <a
+                      class="stack-item"
+                      href={item.href}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noopener' : undefined}
+                    >
+                      <b>{item.name}</b>
+                      <span>{item.desc}</span>
+                    </a>
+                  ))}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="about-section">
+        <div class="about-sec-head"><span class="num">03</span><h3>观测记录</h3></div>
+        <p class="about-lead">这个站不是一天建成的。下面是几次比较重要的改动，按时间倒序排列。</p>
+        <div class="timeline">
+          {
+            TIMELINE.map((row) => (
+              <div class="tl-row">
+                <time>{row.date}</time>
+                <div>
+                  <h4>{row.title}</h4>
+                  <p>{row.desc}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="about-section">
+        <div class="about-sec-head"><span class="num">04</span><h3>找到我</h3></div>
+        <p class="about-lead">如果你也想聊技术、设计或者最近读的书，这几个入口都能找到我。</p>
+        <div class="find-grid">
+          <a class="find-card" href={SITE.github} target="_blank" rel="noopener">
+            <span class="find-icon"><Icon name="github" size={16} /></span>
+            <div><b>GitHub</b><span>{SITE.github.replace('https://github.com/', '@')}</span></div>
+            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
+          </a>
+          <a class="find-card" href={`mailto:${SITE.email}`}>
+            <span class="find-icon"><Icon name="mail" size={16} /></span>
+            <div><b>Email</b><span>{SITE.email}</span></div>
+            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
+          </a>
+          <a class="find-card" href="/rss.xml">
+            <span class="find-icon"><Icon name="rss" size={16} /></span>
+            <div><b>RSS</b><span>订阅新文章</span></div>
+            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
+          </a>
+          <a class="find-card" href="/friends/">
+            <span class="find-icon"><Icon name="user" size={16} /></span>
+            <div><b>友链</b><span>看看同路人</span></div>
+            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <div class="about-sec-head"><span class="num">05</span><h3>站在巨人的肩膀上</h3></div>
+        <p class="about-lead">这个站能跑起来，靠的是这些开源项目和它们背后的维护者。</p>
+        <div class="credit-list">
+          {
+            CREDITS.map((credit) => (
+              <a class="credit" href={credit.href} target="_blank" rel="noopener">
+                <b>{credit.name}</b>
+                <span>{credit.desc}</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>

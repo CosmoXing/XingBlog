@@ -1,0 +1,21 @@
+---
+import { SITE } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-in">
+    <div>
+      <div class="f-logo"><span class="logo-mark"></span>{SITE.title}</div>
+      <p style="margin-top:8px">{SITE.subtitle} · © {year}</p>
+    </div>
+    <div class="f-links">
+      <a href="/rss.xml">RSS</a>
+      <a href="/sitemap-index.xml">Sitemap</a>
+      <a href="/archive/">归档</a>
+      <a href="/about/">关于</a>
+      <a href={SITE.github} target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p>Built with Astro · Deployed on Cloudflare Pages</p>
+  </div>
+</footer>

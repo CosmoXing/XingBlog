@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { categoryCounts, formatDate, sortPosts } from '../../utils';
+
+export async function getStaticPaths() {
+  const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+  const categories = categoryCounts(posts);
+  return categories.map((cat) => ({
+    params: { category: cat.name },
+    props: {
+      category: cat.name,
+      posts: posts.filter((post) => post.data.category === cat.name)
+    }
+  }));
+}
+
+const { category, posts } = Astro.props;
+---
+
+<Layout title={category} description={`${category}分类下的全部文章。`} active="archive" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow"><a href="/categories/">Categories</a> / {category}</div>
+      <h1>{category}<span class="count">{posts.length} POSTS</span></h1>
+      <p>{category}方向下的全部文章，按发布时间排列。</p>
+    </header>
+
+    <div class="rows">
+      {
+        posts.map((post) => (
+          <a class="row" href={`/posts/${post.id}/`}>
+            <span class="date">{formatDate(post.data.pubDate)}</span>
+            <h4>{post.data.title}</h4>
+            <span class="cat-label">{post.data.tags[0] ?? category}</span>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

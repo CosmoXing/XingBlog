@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { categoryCounts, categoryHref, sortPosts } from '../../utils';
+
+const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+const categories = categoryCounts(posts);
+---
+
+<Layout title="分类" description="全部文章分类。" active="archive" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow">Categories</div>
+      <h1>分类<span class="count">{categories.length} SECTIONS</span></h1>
+      <p>比标签更粗一层，四个方向：技术、生活、读书、随笔。</p>
+    </header>
+
+    <div class="tax-grid">
+      {
+        categories.map((cat) => (
+          <a class="tax-card" href={categoryHref(cat.name)}>
+            <span class="name">{cat.name}</span>
+            <span class="cnt">{String(cat.count).padStart(2, '0')}</span>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

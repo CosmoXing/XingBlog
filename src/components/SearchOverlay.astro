@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+---
+
+<div class="overlay" id="overlay">
+  <div class="search-box" role="dialog" aria-label="搜索">
+    <div class="search-input">
+      <Icon name="search" size={15} />
+      <input id="searchInput" type="text" placeholder="搜索文章、标签、关键词…" autocomplete="off" />
+      <button id="searchClose" type="button">ESC</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { sortPosts, tagCounts, tagHref } from '../../utils';
+
+const posts = sortPosts(await getCollection('blog', ({ data }) => !data.draft));
+const tags = tagCounts(posts);
+---
+
+<Layout title="标签" description="全部标签索引。" active="archive" hideMusicMobile>
+  <main class="page-main">
+    <header class="page-head">
+      <div class="eyebrow">Tags</div>
+      <h1>标签<span class="count">{tags.length} TAGS</span></h1>
+      <p>按主题横向索引，适合顺着一个关键词往下读。</p>
+    </header>
+
+    <div class="tax-grid">
+      {
+        tags.map((tag) => (
+          <a class="tax-card" href={tagHref(tag.name)}>
+            <span class="name">#{tag.name}</span>
+            <span class="cnt">{String(tag.count).padStart(2, '0')}</span>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

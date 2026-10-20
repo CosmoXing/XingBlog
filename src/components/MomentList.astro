@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../utils';
+
+export interface Props {
+  moments: CollectionEntry<'moments'>[];
+  limit?: number;
+}
+
+const { moments, limit = 3 } = Astro.props;
+const list = moments.slice(0, limit);
+---
+
+<div class="moments">
+  {
+    list.map((moment) => (
+      <div class="moment">
+        <time>{formatDate(moment.data.date)}</time>
+        <p>{moment.body}</p>
+      </div>
+    ))
+  }
+</div>
