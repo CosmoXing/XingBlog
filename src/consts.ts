@@ -45,12 +45,12 @@ export const GISCUS = {
 // 把音频文件放到 public/music/ 下，再把 src 填成 /music/xxx.mp3
 export const MUSIC = {
   tracks: [
-    { title: 'The truth that you leave', artist: 'Pianoboy 高至豪', src: '/music/The%20truth%20that%20you%20leave%20-%20Pianoboy高至豪.mp3', duration: '03:43' },
-    { title: '城南花已开', artist: '三亩地', src: '/music/城南花已开%20-%20三亩地.mp3', duration: '04:31' },
-    { title: '夜、萤火虫和你', artist: 'AniFace', src: '/music/夜、萤火虫和你%20-%20AniFace.mp3', duration: '03:09' },
-    { title: '所念皆星河', artist: 'CMJ', src: '/music/所念皆星河%20-%20CMJ.mp3', duration: '03:41' },
-    { title: '浮光 (The History)', artist: 'Jannik', src: '/music/浮光%20(The%20History)%20-%20Jannik.mp3', duration: '04:18' },
-    { title: '诀别书', artist: '邓垚', src: '/music/诀别书%20-%20邓垚.mp3', duration: '04:07' }
+    { title: 'The truth that you leave', artist: 'Pianoboy 高至豪', src: '/music/the-truth-that-you-leave.mp3', duration: '03:43' },
+    { title: '城南花已开', artist: '三亩地', src: '/music/chengnan-huayi-kai.mp3', duration: '04:31' },
+    { title: '夜、萤火虫和你', artist: 'AniFace', src: '/music/ye-yinghuochong-he-ni.mp3', duration: '03:09' },
+    { title: '所念皆星河', artist: 'CMJ', src: '/music/suo-nian-jie-xing-he.mp3', duration: '03:41' },
+    { title: '浮光 (The History)', artist: 'Jannik', src: '/music/fu-guang-the-history.mp3', duration: '04:18' },
+    { title: '诀别书', artist: '邓垚', src: '/music/jue-bie-shu.mp3', duration: '04:07' }
   ]
 };
 
