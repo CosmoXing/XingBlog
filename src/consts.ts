@@ -45,9 +45,12 @@ export const GISCUS = {
 // 把音频文件放到 public/music/ 下，再把 src 填成 /music/xxx.mp3
 export const MUSIC = {
   tracks: [
-    { title: 'Merry Christmas Mr. Lawrence', artist: '坂本龍一 · 1983', src: '', duration: '04:32' },
-    { title: 'Aqua', artist: '坂本龍一 · 1999', src: '', duration: '05:26' },
-    { title: 'Energy Flow', artist: '坂本龍一 · 1999', src: '', duration: '04:34' }
+    { title: 'The truth that you leave', artist: 'Pianoboy 高至豪', src: '/music/The%20truth%20that%20you%20leave%20-%20Pianoboy高至豪.mp3', duration: '03:43' },
+    { title: '城南花已开', artist: '三亩地', src: '/music/城南花已开%20-%20三亩地.mp3', duration: '04:31' },
+    { title: '夜、萤火虫和你', artist: 'AniFace', src: '/music/夜、萤火虫和你%20-%20AniFace.mp3', duration: '03:09' },
+    { title: '所念皆星河', artist: 'CMJ', src: '/music/所念皆星河%20-%20CMJ.mp3', duration: '03:41' },
+    { title: '浮光 (The History)', artist: 'Jannik', src: '/music/浮光%20(The%20History)%20-%20Jannik.mp3', duration: '04:18' },
+    { title: '诀别书', artist: '邓垚', src: '/music/诀别书%20-%20邓垚.mp3', duration: '04:07' }
   ]
 };
 
