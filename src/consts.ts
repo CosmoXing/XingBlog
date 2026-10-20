@@ -6,7 +6,7 @@ export const SITE = {
   author: 'CosmoXing',
   // 上线前同步修改 astro.config.mjs 里的 site
   url: 'https://blog.cosmoxing.com',
-  startDate: '2026-02-01',
+  startDate: '2026-10-20', // 运行天数计数起点：2026-10-20 起算，当天为第 1 天
   email: 'hello@cosmoxing.com',
   github: 'https://github.com/CosmoXing',
   rss: '/rss.xml'
