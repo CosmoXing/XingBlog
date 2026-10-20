@@ -1,5 +1,6 @@
 ---
-import { NOW, SITE, SITE_INFO } from '../consts';
+import { SITE, SITE_INFO } from '../consts';
+import nowData from '../content/now.json';
 
 export interface Props {
   postCount: number;
@@ -9,13 +10,19 @@ export interface Props {
 }
 
 const { postCount, tagCount, words, days } = Astro.props;
+
+const nowRows = [
+  { key: '在做', value: nowData.doing },
+  { key: '在读', value: nowData.reading },
+  { key: '在听', value: nowData.listening }
+];
 ---
 
 <aside class="rail rail-right">
   <div class="card rail-card">
     <h4 class="rail-title">此刻 <span>Now</span></h4>
     {
-      NOW.map((row) => (
+      nowRows.map((row) => (
         <div class="now-row">
           <span class="k">{row.key}</span>
           <span class="v">{row.value}</span>

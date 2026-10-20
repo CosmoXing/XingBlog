@@ -21,12 +21,6 @@ export const NAV = [
 
 export const CATEGORIES = ['技术', '生活', '读书', '随笔'] as const;
 
-export const NOW = [
-  { key: '在做', value: '重写博客首页' },
-  { key: '在读', value: '《暗淡蓝点》 62%' },
-  { key: '在听', value: '坂本龍一 · MCML' }
-];
-
 export const SITE_INFO = [
   { key: '框架', value: 'Astro 5' },
   { key: '样式', value: '原生 CSS' },

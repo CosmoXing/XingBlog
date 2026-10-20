@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { config, fields, collection, singleton } from '@keystatic/core';
 
 /**
  * 本地 `npm run dev` 时用 local 模式，直接改 src/content 里的文件；
@@ -65,6 +65,27 @@ export default config({
   cloud: { project: cloudProject },
   ui: {
     brand: { name: 'CosmoXing 控制台' }
+  },
+  singletons: {
+    now: singleton({
+      label: '此刻',
+      path: 'src/content/now',
+      format: { data: 'json' },
+      schema: {
+        doing: fields.text({
+          label: '在做',
+          validation: { isRequired: true }
+        }),
+        reading: fields.text({
+          label: '在读',
+          validation: { isRequired: true }
+        }),
+        listening: fields.text({
+          label: '在听',
+          validation: { isRequired: true }
+        })
+      }
+    })
   },
   collections: {
     tech: blogCollection('技术', 'tech', '技术'),
