@@ -319,6 +319,22 @@ if (disc && musicPanel) {
     );
     footerIo.observe(footer);
   }
+  if (playlist) {
+    setTrack(0);
+  }
+  const prevCtrl = musicPanel.querySelector('[aria-label="上一首"]');
+  const nextCtrl = musicPanel.querySelector('[aria-label="下一首"]');
+  const skipTo = (offset) => {
+    const trackCount = playlist ? playlist.querySelectorAll('.pl-row').length : 0;
+    if (!trackCount) return;
+    setTrack((currentTrack + offset + trackCount) % trackCount);
+    if (audio && audio.getAttribute('src')) {
+      audio.play().then(() => disc.classList.add('playing')).catch(() => {});
+      if (playBtn) playBtn.innerHTML = pauseIcon;
+    }
+  };
+  if (prevCtrl) prevCtrl.addEventListener('click', () => skipTo(-1));
+  if (nextCtrl) nextCtrl.addEventListener('click', () => skipTo(1));
   if (audio) {
     audio.addEventListener('timeupdate', () => {
       if (!audio.duration) return;
@@ -332,8 +348,15 @@ if (disc && musicPanel) {
       }
     });
     audio.addEventListener('ended', () => {
-      disc.classList.remove('playing');
-      if (playBtn) playBtn.innerHTML = playIcon;
+      const trackCount = playlist ? playlist.querySelectorAll('.pl-row').length : 0;
+      if (trackCount > 1) {
+        setTrack((currentTrack + 1) % trackCount);
+        audio.play().then(() => disc.classList.add('playing')).catch(() => {});
+        if (playBtn) playBtn.innerHTML = pauseIcon;
+      } else {
+        disc.classList.remove('playing');
+        if (playBtn) playBtn.innerHTML = playIcon;
+      }
     });
   }
 }
