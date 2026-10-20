@@ -85,6 +85,43 @@ export default config({
           validation: { isRequired: true }
         })
       }
+    }),
+    contacts: singleton({
+      label: '找到我',
+      path: 'src/content/contacts',
+      format: { data: 'json' },
+      schema: {
+        items: fields.array(
+          fields.object({
+            name: fields.text({
+              label: '名称',
+              validation: { isRequired: true }
+            }),
+            handle: fields.text({
+              label: '副标题'
+            }),
+            url: fields.text({
+              label: '链接',
+              validation: { isRequired: true }
+            }),
+            icon: fields.select({
+              label: '图标',
+              options: [
+                { label: 'GitHub', value: 'github' },
+                { label: '邮箱', value: 'mail' },
+                { label: 'RSS', value: 'rss' },
+                { label: '用户', value: 'user' },
+                { label: '链接', value: 'link' }
+              ],
+              defaultValue: 'link'
+            })
+          }),
+          {
+            label: '联系方式',
+            itemLabel: (props) => props.fields.name.value
+          }
+        )
+      }
     })
   },
   collections: {

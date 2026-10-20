@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import { SITE } from '../consts';
+import contactsData from '../content/contacts.json';
 import { daysSince, totalWords } from '../utils';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -144,26 +145,20 @@ const CREDITS = [
         <div class="about-sec-head"><span class="num">04</span><h3>找到我</h3></div>
         <p class="about-lead">如果你也想聊技术、设计或者最近读的书，这几个入口都能找到我。</p>
         <div class="find-grid">
-          <a class="find-card" href={SITE.github} target="_blank" rel="noopener">
-            <span class="find-icon"><Icon name="github" size={16} /></span>
-            <div><b>GitHub</b><span>{SITE.github.replace('https://github.com/', '@')}</span></div>
-            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
-          </a>
-          <a class="find-card" href={`mailto:${SITE.email}`}>
-            <span class="find-icon"><Icon name="mail" size={16} /></span>
-            <div><b>Email</b><span>{SITE.email}</span></div>
-            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
-          </a>
-          <a class="find-card" href="/rss.xml">
-            <span class="find-icon"><Icon name="rss" size={16} /></span>
-            <div><b>RSS</b><span>订阅新文章</span></div>
-            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
-          </a>
-          <a class="find-card" href="/friends/">
-            <span class="find-icon"><Icon name="user" size={16} /></span>
-            <div><b>友链</b><span>看看同路人</span></div>
-            <span class="find-arrow"><Icon name="arrow" size={14} /></span>
-          </a>
+          {
+            contactsData.items.map((item) => (
+              <a
+                class="find-card"
+                href={item.url}
+                target={item.url.startsWith('http') ? '_blank' : undefined}
+                rel={item.url.startsWith('http') ? 'noopener' : undefined}
+              >
+                <span class="find-icon"><Icon name={item.icon} size={16} /></span>
+                <div><b>{item.name}</b><span>{item.handle}</span></div>
+                <span class="find-arrow"><Icon name="arrow" size={14} /></span>
+              </a>
+            ))
+          }
         </div>
       </section>
 

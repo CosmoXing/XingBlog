@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "name": "GitHub",
+      "handle": "@CosmoXing",
+      "url": "https://github.com/CosmoXing",
+      "icon": "github"
+    },
+    {
+      "name": "Email",
+      "handle": "hello@cosmoxing.com",
+      "url": "mailto:hello@cosmoxing.com",
+      "icon": "mail"
+    },
+    {
+      "name": "RSS",
+      "handle": "订阅新文章",
+      "url": "/rss.xml",
+      "icon": "rss"
+    },
+    {
+      "name": "友链",
+      "handle": "看看同路人",
+      "url": "/friends/",
+      "icon": "user"
+    }
+  ]
+}
