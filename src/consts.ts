@@ -16,7 +16,6 @@ export const NAV = [
   { label: '首页', href: '/', key: 'home' },
   { label: '归档', href: '/archive/', key: 'archive' },
   { label: '动态', href: '/moments/', key: 'moments' },
-  { label: '友链', href: '/friends/', key: 'friends' },
   { label: '网址导航', href: '/compass/', key: 'compass' },
   { label: '关于', href: '/about/', key: 'about' }
 ];
