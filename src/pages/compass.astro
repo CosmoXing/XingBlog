@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
-import { COMPASS } from '../consts';
+import compass from '../content/compass.json';
 
-const groups = COMPASS.map((group) => ({
+const groups = compass.groups.map((group) => ({
   group: group.group,
   items: group.items.map((item) => ({ ...item, host: new URL(item.url).hostname }))
 }));
@@ -25,12 +25,21 @@ const total = groups.reduce((sum, g) => sum + g.items.length, 0);
           <div class="compass-grid">
             {group.items.map((item) => (
               <a class="compass-card" href={item.url} target="_blank" rel="noopener">
-                <div class="compass-name">
-                  {item.name}
-                  <Icon name="arrow" size={13} />
+                <div class="compass-head">
+                  {item.logo ? (
+                    <img class="compass-logo" src={item.logo} alt="" loading="lazy" />
+                  ) : (
+                    <span class="compass-logo compass-logo--letter">{item.name.slice(0, 1)}</span>
+                  )}
+                  <div class="compass-title">
+                    <div class="compass-name">
+                      {item.name}
+                      <Icon name="arrow" size={13} />
+                    </div>
+                    <div class="compass-url">{item.host}</div>
+                  </div>
                 </div>
                 <div class="compass-desc">{item.desc}</div>
-                <div class="compass-url">{item.host}</div>
               </a>
             ))}
           </div>

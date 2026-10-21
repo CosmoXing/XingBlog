@@ -115,6 +115,50 @@ export default config({
         )
       }
     }),
+    compass: singleton({
+      label: '网址导航',
+      path: 'src/content/compass',
+      format: { data: 'json' },
+      schema: {
+        groups: fields.array(
+          fields.object({
+            group: fields.text({
+              label: '分组名称',
+              validation: { isRequired: true }
+            }),
+            items: fields.array(
+              fields.object({
+                name: fields.text({
+                  label: '名称',
+                  validation: { isRequired: true }
+                }),
+                desc: fields.text({
+                  label: '描述'
+                }),
+                url: fields.text({
+                  label: '网址',
+                  validation: { isRequired: true }
+                }),
+                logo: fields.image({
+                  label: 'Logo',
+                  description: '可选，建议正方形；不上传则显示名称首字母',
+                  directory: 'public/images/logos',
+                  publicPath: '/images/logos'
+                })
+              }),
+              {
+                label: '站点',
+                itemLabel: (props) => props.fields.name.value
+              }
+            )
+          }),
+          {
+            label: '分组',
+            itemLabel: (props) => props.fields.group.value
+          }
+        )
+      }
+    }),
     contacts: singleton({
       label: '找到我',
       path: 'src/content/contacts',
