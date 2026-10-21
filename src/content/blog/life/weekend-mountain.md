@@ -1,11 +1,16 @@
 ---
 title: 周末去了城市边缘的山
 description: 没有信号的六个小时，反而想清楚了很多事。
+cover: /images/covers/weekend-mountain/cover.png
 pubDate: 2026-10-01
 category: 生活
-tags: [摄影, 日常, 山野]
+tags:
+  - 摄影
+  - 日常
+  - 山野
+pinned: false
+draft: false
 ---
-
 周六早上六点出门，坐了一个半小时的公交，又走了四十分钟，才到山脚下。天气预报说有雨，结果一路都是晴天。
 
 ## 信号消失之后
