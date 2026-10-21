@@ -10,11 +10,6 @@
           "logo": "/images/logos/groups/0/items/0/logo.png"
         },
         {
-          "name": "MDN Web Docs",
-          "desc": "Web 技术权威文档",
-          "url": "https://developer.mozilla.org/zh-CN/"
-        },
-        {
           "name": "Can I Use",
           "desc": "浏览器兼容性查询",
           "url": "https://caniuse.com"
