@@ -58,12 +58,26 @@ const latestDate = formatDate(posts[0].data.pubDate);
               <span>{featured.body?.replace(/\s/g, '').length ?? 0} 字</span>
             </div>
           </div>
-          <div class="cover" style={coverStyle(0)}>
+          <div
+            class:list={['cover', { 'cover--img': Boolean(featured.data.cover) }]}
+            style={featured.data.cover ? undefined : coverStyle(0)}
+          >
+            {
+              featured.data.cover ? (
+                <>
+                  <img class="cover-img" src={featured.data.cover} alt={featured.data.title} loading="lazy" />
+                  <span class="cover-shade" />
+                </>
+              ) : (
+                <>
+                  <span class="cover-orb" />
+                  <span class="star-dot" style="left:26%;top:62%" />
+                  <span class="star-dot" style="left:71%;top:31%;width:2px;height:2px" />
+                  <span class="star-dot" style="left:56%;top:78%;width:2px;height:2px" />
+                </>
+              )
+            }
             <span class="cover-tag">FIG. 01 / BUILD</span>
-            <span class="cover-orb"></span>
-            <span class="star-dot" style="left:26%;top:62%"></span>
-            <span class="star-dot" style="left:71%;top:31%;width:2px;height:2px"></span>
-            <span class="star-dot" style="left:56%;top:78%;width:2px;height:2px"></span>
           </div>
         </a>
       </section>
@@ -96,9 +110,19 @@ const latestDate = formatDate(posts[0].data.pubDate);
           {
             life.map((post, index) => (
               <a class="life" href={`/posts/${post.id}/`}>
-                <div class="cover" style={coverStyle(index + 4)}>
+                <div
+                  class:list={['cover', { 'cover--img': Boolean(post.data.cover) }]}
+                  style={post.data.cover ? undefined : coverStyle(index + 4)}
+                >
                   <span class="cover-tag">FIELD NOTE {String(index + 1).padStart(2, '0')}</span>
-                  <span class="star-dot" style={index === 0 ? 'left:22%;top:28%' : 'left:63%;top:44%'}></span>
+                  {post.data.cover ? (
+                    <>
+                      <img class="cover-img" src={post.data.cover} alt={post.data.title} loading="lazy" />
+                      <span class="cover-shade" />
+                    </>
+                  ) : (
+                    <span class="star-dot" style={index === 0 ? 'left:22%;top:28%' : 'left:63%;top:44%'} />
+                  )}
                 </div>
                 <div class="life-body">
                   <div class="meta">

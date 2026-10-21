@@ -29,6 +29,12 @@ function blogCollection(label: string, folder: string, category: string) {
         multiline: true,
         validation: { isRequired: true }
       }),
+      cover: fields.image({
+        label: '封面图',
+        description: '可选。建议 16:9，不上传则使用自动生成的星图封面',
+        directory: 'public/images/covers',
+        publicPath: '/images/covers'
+      }),
       pubDate: fields.date({
         label: '发布日期',
         validation: { isRequired: true }

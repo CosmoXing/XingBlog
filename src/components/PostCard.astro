@@ -5,9 +5,10 @@ import { coverStyle, formatDate, readingMinutes } from '../utils';
 export interface Props {
   post: Post;
   index?: number;
+  showCover?: boolean;
 }
 
-const { post, index = 0 } = Astro.props;
+const { post, index = 0, showCover = true } = Astro.props;
 const dots = [
   { left: '30%', top: '58%' },
   { left: '68%', top: '36%' },
@@ -16,15 +17,38 @@ const dots = [
   { left: '58%', top: '28%' }
 ];
 const dot = dots[index % dots.length];
+const cover = showCover || Boolean(post.data.pinned);
+const img = post.data.cover;
 ---
 
-<a class="post-card" href={`/posts/${post.id}/`}>
-  <div class="cover" style={coverStyle(index)}>
-    <span class="cover-tag">FIG. {String(index + 1).padStart(2, '0')}</span>
-    <span class="star-dot" style={`left:${dot.left};top:${dot.top}`}></span>
-  </div>
+<a class:list={['post-card', { 'post-card--text': !cover }]} href={`/posts/${post.id}/`}>
+  {
+    cover && (
+      <div class:list={['cover', { 'cover--img': Boolean(img) }]} style={img ? undefined : coverStyle(index)}>
+        {img ? (
+          <>
+            <img class="cover-img" src={img} alt={post.data.title} loading="lazy" />
+            <span class="cover-shade" />
+          </>
+        ) : (
+          <span class="star-dot" style={`left:${dot.left};top:${dot.top}`} />
+        )}
+        <span class="cover-tag">FIG. {String(index + 1).padStart(2, '0')}</span>
+      </div>
+    )
+  }
   <div class="body">
-    <h4>{post.data.title}</h4>
+    <h4>
+      <span class="title-text">
+        {post.data.title}
+        {post.data.pinned && <span class="pin-star" title="置顶">★</span>}
+      </span>
+      <span class="pc-arrow">→</span>
+    </h4>
+    <div class="card-tags">
+      <span class="cat">{post.data.category}</span>
+      {post.data.tags.slice(0, 2).map((tag) => <span class="tg">#{tag}</span>)}
+    </div>
     <p>{post.data.description}</p>
     <div class="meta">
       <span>{formatDate(post.data.pubDate).slice(5)}</span>

@@ -53,12 +53,26 @@ const minutes = readingMinutes(post);
         </div>
       </header>
 
-      <div class="post-cover cover" style={coverStyle(index)}>
+      <div
+        class:list={['post-cover', 'cover', { 'cover--img': Boolean(post.data.cover) }]}
+        style={post.data.cover ? undefined : coverStyle(index)}
+      >
+        {
+          post.data.cover ? (
+            <>
+              <img class="cover-img" src={post.data.cover} alt={post.data.title} loading="lazy" />
+              <span class="cover-shade" />
+            </>
+          ) : (
+            <>
+              <span class="cover-orb" />
+              <span class="star-dot" style="left:24%;top:58%" />
+              <span class="star-dot" style="left:61%;top:34%;width:2px;height:2px" />
+              <span class="star-dot" style="left:79%;top:70%;width:2px;height:2px" />
+            </>
+          )
+        }
         <span class="cover-tag">FIG. {String(index + 1).padStart(2, '0')} / {post.data.category}</span>
-        <span class="cover-orb"></span>
-        <span class="star-dot" style="left:24%;top:58%"></span>
-        <span class="star-dot" style="left:61%;top:34%;width:2px;height:2px"></span>
-        <span class="star-dot" style="left:79%;top:70%;width:2px;height:2px"></span>
       </div>
 
       <div class="prose">
