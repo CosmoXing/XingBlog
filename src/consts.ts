@@ -22,13 +22,6 @@ export const NAV = [
 
 export const CATEGORIES = ['技术', '生活', '读书', '随笔'] as const;
 
-export const SITE_INFO = [
-  { key: '框架', value: 'Astro 5' },
-  { key: '样式', value: '原生 CSS' },
-  { key: '部署', value: 'Cloudflare Pages' },
-  { key: '始于', value: '2026.02' }
-];
-
 // 填入 Giscus 的仓库信息后评论区会自动启用
 export const GISCUS = {
   repo: '',

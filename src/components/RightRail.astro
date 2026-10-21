@@ -1,5 +1,6 @@
 ---
-import { SITE, SITE_INFO } from '../consts';
+import { SITE } from '../consts';
+import siteInfo from '../content/siteinfo.json';
 import nowData from '../content/now.json';
 
 export interface Props {
@@ -44,7 +45,7 @@ const nowRows = [
   <div class="card rail-card">
     <h4 class="rail-title">站点 <span>Site</span></h4>
     {
-      SITE_INFO.map((row) => (
+      siteInfo.items.map((row) => (
         <div class="info-row"><span>{row.key}</span><span>{row.value}</span></div>
       ))
     }

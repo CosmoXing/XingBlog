@@ -86,6 +86,29 @@ export default config({
         })
       }
     }),
+    siteinfo: singleton({
+      label: '站点信息',
+      path: 'src/content/siteinfo',
+      format: { data: 'json' },
+      schema: {
+        items: fields.array(
+          fields.object({
+            key: fields.text({
+              label: '名称',
+              validation: { isRequired: true }
+            }),
+            value: fields.text({
+              label: '内容',
+              validation: { isRequired: true }
+            })
+          }),
+          {
+            label: '信息行',
+            itemLabel: (props) => props.fields.key.value
+          }
+        )
+      }
+    }),
     contacts: singleton({
       label: '找到我',
       path: 'src/content/contacts',
