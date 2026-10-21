@@ -67,7 +67,8 @@
         {
           "name": "DeepSeek",
           "desc": "深度求索，推理与编程",
-          "url": "https://chat.deepseek.com"
+          "url": "https://chat.deepseek.com",
+          "logo": "/images/logos/groups/2/items/3/logo.png"
         }
       ]
     },
