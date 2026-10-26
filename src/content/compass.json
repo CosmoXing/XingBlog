@@ -8,16 +8,6 @@
           "desc": "全球最大的代码托管平台",
           "url": "https://github.com",
           "logo": "/images/logos/groups/0/items/0/logo.png"
-        },
-        {
-          "name": "Can I Use",
-          "desc": "浏览器兼容性查询",
-          "url": "https://caniuse.com"
-        },
-        {
-          "name": "Astro Docs",
-          "desc": "本站使用的框架文档",
-          "url": "https://docs.astro.build"
         }
       ]
     },
