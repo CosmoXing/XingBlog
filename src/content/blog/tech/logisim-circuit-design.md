@@ -1,8 +1,6 @@
 ---
 title: logisim-circuit-design
-description: |-
-  吉大大二logisim计算机硬件设计实验skill，可安装到workbuddy，deepseekharness以及其他angent工具
-  GitHub仓库地址：https://github.com/CosmoXing/logisim-circuit-design.git
+description: 吉大大二logisim计算机硬件设计实验skill，可安装到workbuddy，deepseekharness以及其他angent工具
 pubDate: 2026-11-09
 category: 技术
 tags: []
@@ -13,8 +11,7 @@ draft: false
 
 > 让 AI 用代码画出能跑的 Logisim 数字电路 —— 生成的 `.circ` 打开即用，自带绘图工具条，并通过真值表与测试向量验证。
 
-!\[License: MIT]\([https://img.shields.io/badge/License-MIT-green.svg](https://img.shields.io/badge/License-MIT-green.svg))
-!\[Logisim]\([https://img.shields.io/badge/Logisim--evolution-5.0.0-blue.svg](https://img.shields.io/badge/Logisim--evolution-5.0.0-blue.svg))
+GitHub仓库地址：https\://github.com/CosmoXing/logisim-circuit-design.git
 
 ---
 
